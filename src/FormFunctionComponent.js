@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import Input from "./Input";
 
-function Form() {
+function FormFunctionComponent() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -47,7 +47,7 @@ function Form() {
   );
 }
 
-export default Form;
+export default FormFunctionComponent;
 
 const StyledForm = styled.form`
   width: 400px;

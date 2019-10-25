@@ -4,11 +4,12 @@ import styled from "styled-components";
 
 Input.propTypes = {
   onChange: PropTypes.func,
-  value: PropTypes.string
+  value: PropTypes.string,
+  name: PropTypes.string
 };
 
-function Input({ onChange, value }) {
-  return <StyledInput onChange={onChange} value={value} />;
+function Input({ onChange, value, name }) {
+  return <StyledInput onChange={onChange} value={value} name={name} />;
 }
 
 export default Input;

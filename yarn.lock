@@ -8557,6 +8557,11 @@ react-scripts@3.2.0:
   optionalDependencies:
     fsevents "2.0.7"
 
+react-simple-keyboard@^2.0.20:
+  version "2.0.20"
+  resolved "https://registry.yarnpkg.com/react-simple-keyboard/-/react-simple-keyboard-2.0.20.tgz#8f220e5b56a05a6415eeb55ff680ff92109280f1"
+  integrity sha512-Z1BtqWSB+/5dBdUJQ3ob80uybSE63LIxmHqTtcETyeTrlcXdQxxIRGr138EdJW4o5OdZH8OdBKBGSalfzkD+cQ==
+
 react@^16.11.0:
   version "16.11.0"
   resolved "https://registry.yarnpkg.com/react/-/react-16.11.0.tgz#d294545fe62299ccee83363599bf904e4a07fdbb"
