@@ -1,139 +1,61 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import Keyboard from "react-simple-keyboard";
-import "react-simple-keyboard/build/css/index.css";
+import OSK from "./OSK";
 import "./index.css";
 
 class DemoForm extends Component {
-  state = {
-    keyboardOpen: false,
-    layoutName: "default",
-    inputName: "firstName",
-    input: {}
-  };
-
-  onChangeAll = inputObj => {
-    this.setState({
-      input: inputObj
-    });
-
-    console.log("Input changed", inputObj);
-  };
-
-  onKeyPress = button => {
-    console.log("Button pressed", button);
-
-    /**
-     * If you want to handle the shift and caps lock buttons
-     */
-    if (button === "{shift}" || button === "{lock}") this.handleShift();
-  };
-
-  handleShift = () => {
-    let layoutName = this.state.layoutName;
-
-    this.setState({
-      layoutName: layoutName === "default" ? "shift" : "default"
-    });
-  };
-
-  onChangeInput = event => {
-    let inputVal = event.target.value;
-
-    let updatedInputObj = {
-      ...this.state.input,
-      [this.state.inputName]: inputVal
-    };
-
-    this.setState(
-      {
-        input: updatedInputObj
-      },
-      () => {
-        this.keyboard.setInput(inputVal);
-      }
-    );
-  };
-
-  setActiveInput = inputName => {
-    this.setState(
-      {
-        inputName: inputName,
-        keyboardOpen: true
-      },
-      () => {
-        console.log("Active input", inputName);
-      }
-    );
-  };
-
-  hideKeyboard = () => {
-    this.setState({ keyboardOpen: false });
-  };
-
-  handleSubmit = e => {
-    const { firstName, lastName, email } = this.state.input;
+  handleSubmit(e, values) {
+    const { firstName, lastName, email } = values;
 
     e.preventDefault();
     console.log("✅ submitted!");
     console.log("firstName:", firstName);
     console.log("lastName:", lastName);
     console.log("email:", email);
-  };
+  }
 
   render() {
     return (
-      <StyledForm onSubmit={this.handleSubmit}>
-        <FieldRow>
-          <FieldWrapper>
-            <Label>First Name</Label>
-            <StyledInput
-              onFocus={() => this.setActiveInput("firstName")}
-              value={this.state.input["firstName"] || ""}
-              onChange={e => this.onChangeInput(e)}
-            />
-          </FieldWrapper>
+      <OSK>
+        {({ values, setActiveInput, onChangeInput }) => (
+          <StyledForm onSubmit={e => this.handleSubmit(e, values)}>
+            <FieldRow>
+              <FieldWrapper>
+                <Label>First Name</Label>
+                <StyledInput
+                  onFocus={() => setActiveInput("firstName")}
+                  value={values["firstName"] || ""}
+                  onChange={e => onChangeInput(e)}
+                />
+              </FieldWrapper>
 
-          <FieldWrapper>
-            <Label>Last Name</Label>
-            <StyledInput
-              onFocus={() => this.setActiveInput("lastName")}
-              value={this.state.input["lastName"] || ""}
-              onChange={e => this.onChangeInput(e)}
-            />
-          </FieldWrapper>
-        </FieldRow>
+              <FieldWrapper>
+                <Label>Last Name</Label>
+                <StyledInput
+                  onFocus={() => setActiveInput("lastName")}
+                  value={values["lastName"] || ""}
+                  onChange={e => onChangeInput(e)}
+                />
+              </FieldWrapper>
+            </FieldRow>
 
-        <FieldRow>
-          <FieldWrapper>
-            <Label>Email</Label>
-            <StyledInput
-              onFocus={() => this.setActiveInput("email")}
-              value={this.state.input["email"] || ""}
-              onChange={e => this.onChangeInput(e)}
-            />
-          </FieldWrapper>
-        </FieldRow>
+            <FieldRow>
+              <FieldWrapper>
+                <Label>Email</Label>
+                <StyledInput
+                  onFocus={() => setActiveInput("email")}
+                  value={values["email"] || ""}
+                  onChange={e => onChangeInput(e)}
+                />
+              </FieldWrapper>
+            </FieldRow>
 
-        <FieldRow>
-          <Button type="submit">Submit</Button>
-        </FieldRow>
-
-        <KeyboardOuterWrapper isOpen={this.state.keyboardOpen}>
-          <KeyboardInnerWrapper>
-            <HideButton type="button" onClick={this.hideKeyboard}>
-              Close Keyboard
-            </HideButton>
-            <Keyboard
-              keyboardRef={r => (this.keyboard = r)}
-              inputName={this.state.inputName}
-              layoutName={this.state.layoutName}
-              onChangeAll={inputObj => this.onChangeAll(inputObj)}
-              onKeyPress={button => this.onKeyPress(button)}
-            />
-          </KeyboardInnerWrapper>
-        </KeyboardOuterWrapper>
-      </StyledForm>
+            <FieldRow>
+              <Button type="submit">Submit</Button>
+            </FieldRow>
+          </StyledForm>
+        )}
+      </OSK>
     );
   }
 }
@@ -188,25 +110,4 @@ const Label = styled.label`
   color: white;
   opacity: 0.8;
   margin-bottom: 2px;
-`;
-
-const KeyboardOuterWrapper = styled.div`
-  display: ${props => (props.isOpen ? "block" : "none")};
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-`;
-
-const KeyboardInnerWrapper = styled.div`
-  width: 100%;
-  max-width: 800px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-`;
-
-const HideButton = styled.button`
-  width: 100px;
-  margin-left: auto;
 `;
