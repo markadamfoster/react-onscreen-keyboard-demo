@@ -8,7 +8,7 @@ class DemoForm extends Component {
   state = {
     keyboardOpen: false,
     layoutName: "default",
-    inputName: "input1",
+    inputName: "firstName",
     input: {}
   };
 
@@ -72,13 +72,13 @@ class DemoForm extends Component {
   };
 
   handleSubmit = e => {
-    const { input1, input2, input3 } = this.state.input;
+    const { firstName, lastName, email } = this.state.input;
 
     e.preventDefault();
     console.log("✅ submitted!");
-    console.log("firstName:", input1);
-    console.log("lastName:", input2);
-    console.log("email:", input3);
+    console.log("firstName:", firstName);
+    console.log("lastName:", lastName);
+    console.log("email:", email);
   };
 
   render() {
@@ -88,9 +88,8 @@ class DemoForm extends Component {
           <FieldWrapper>
             <Label>First Name</Label>
             <StyledInput
-              onFocus={() => this.setActiveInput("input1")}
-              value={this.state.input["input1"] || ""}
-              placeholder={"Input 1"}
+              onFocus={() => this.setActiveInput("firstName")}
+              value={this.state.input["firstName"] || ""}
               onChange={e => this.onChangeInput(e)}
             />
           </FieldWrapper>
@@ -98,9 +97,8 @@ class DemoForm extends Component {
           <FieldWrapper>
             <Label>Last Name</Label>
             <StyledInput
-              onFocus={() => this.setActiveInput("input2")}
-              value={this.state.input["input2"] || ""}
-              placeholder={"Input 2"}
+              onFocus={() => this.setActiveInput("lastName")}
+              value={this.state.input["lastName"] || ""}
               onChange={e => this.onChangeInput(e)}
             />
           </FieldWrapper>
@@ -110,9 +108,8 @@ class DemoForm extends Component {
           <FieldWrapper>
             <Label>Email</Label>
             <StyledInput
-              onFocus={() => this.setActiveInput("input3")}
-              value={this.state.input["input3"] || ""}
-              placeholder={"Input 3"}
+              onFocus={() => this.setActiveInput("email")}
+              value={this.state.input["email"] || ""}
               onChange={e => this.onChangeInput(e)}
             />
           </FieldWrapper>
@@ -167,7 +164,7 @@ const StyledInput = styled.input`
   padding: 10px;
   font-size: 17px;
   color: #333;
-  border-radius: 6px;
+  border-radius: 4px;
   border: none;
 `;
 
@@ -180,7 +177,7 @@ const Button = styled.button`
   font-weight: 700;
   color: #005672;
   height: 42px;
-  border-radius: 6px;
+  border-radius: 4px;
   border: 1px solid #017d85;
 `;
 
