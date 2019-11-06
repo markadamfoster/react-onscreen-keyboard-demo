@@ -1,13 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 
-import Form from "./Form";
+import DemoForm from "./DemoForm";
 
 function App() {
   return (
     <Wrapper>
       <h1>Demo Form</h1>
-      <Form />
+      <DemoForm />
     </Wrapper>
   );
 }
