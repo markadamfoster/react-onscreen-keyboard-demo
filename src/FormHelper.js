@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Keyboard from "react-simple-keyboard";
 import "react-simple-keyboard/build/css/index.css";
 
-class OSK extends Component {
+class FormHelper extends Component {
   state = {
     keyboardOpen: false,
     layoutName: "default",
@@ -12,17 +12,27 @@ class OSK extends Component {
     input: {}
   };
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.initialValues !== this.props.initialValues) {
+      const { initialValues } = this.props;
+
+      this.setState({
+        input: { ...initialValues }
+      });
+
+      Object.keys(initialValues).forEach(field => {
+        this.keyboard.setInput(initialValues[field], field);
+      });
+    }
+  }
+
   onChangeAll = inputObj => {
     this.setState({
       input: inputObj
     });
-
-    console.log("Input changed", inputObj);
   };
 
   onKeyPress = button => {
-    console.log("Button pressed", button);
-
     /**
      * If you want to handle the shift and caps lock buttons
      */
@@ -56,15 +66,10 @@ class OSK extends Component {
   };
 
   setActiveInput = inputName => {
-    this.setState(
-      {
-        inputName: inputName,
-        keyboardOpen: true
-      },
-      () => {
-        console.log("Active input", inputName);
-      }
-    );
+    this.setState({
+      inputName: inputName,
+      keyboardOpen: true
+    });
   };
 
   hideKeyboard = () => {
@@ -97,7 +102,7 @@ class OSK extends Component {
   }
 }
 
-export default OSK;
+export default FormHelper;
 
 const KeyboardOuterWrapper = styled.div`
   display: ${props => (props.isOpen ? "block" : "none")};

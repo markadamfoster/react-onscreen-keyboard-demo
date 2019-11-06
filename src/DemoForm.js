@@ -1,9 +1,30 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import OSK from "./OSK";
+import FormHelper from "./FormHelper";
 import "./index.css";
 
 class DemoForm extends Component {
+  state = {
+    dataLoaded: false,
+    initialValues: {}
+  };
+
+  componentDidMount() {
+    this.fetchFakeInitialValues();
+  }
+
+  fetchFakeInitialValues = () => {
+    setTimeout(() => {
+      this.setState({ dataLoaded: true });
+      this.setState({
+        initialValues: {
+          firstName: "Mark",
+          lastName: "Foster"
+        }
+      });
+    }, 1000);
+  };
+
   handleSubmit(e, values) {
     const { firstName, lastName, email } = values;
 
@@ -15,8 +36,12 @@ class DemoForm extends Component {
   }
 
   render() {
+    const { initialValues } = this.state;
+
+    if (!this.state.dataLoaded) return <Loading>Loading...</Loading>;
+
     return (
-      <OSK>
+      <FormHelper initialValues={initialValues}>
         {({ values, setActiveInput, onChangeInput }) => (
           <StyledForm onSubmit={e => this.handleSubmit(e, values)}>
             <FieldRow>
@@ -24,7 +49,7 @@ class DemoForm extends Component {
                 <Label>First Name</Label>
                 <StyledInput
                   onFocus={() => setActiveInput("firstName")}
-                  value={values["firstName"] || ""}
+                  value={values.firstName || ""}
                   onChange={e => onChangeInput(e)}
                 />
               </FieldWrapper>
@@ -33,7 +58,7 @@ class DemoForm extends Component {
                 <Label>Last Name</Label>
                 <StyledInput
                   onFocus={() => setActiveInput("lastName")}
-                  value={values["lastName"] || ""}
+                  value={values.lastName || ""}
                   onChange={e => onChangeInput(e)}
                 />
               </FieldWrapper>
@@ -44,7 +69,7 @@ class DemoForm extends Component {
                 <Label>Email</Label>
                 <StyledInput
                   onFocus={() => setActiveInput("email")}
-                  value={values["email"] || ""}
+                  value={values.email || ""}
                   onChange={e => onChangeInput(e)}
                 />
               </FieldWrapper>
@@ -55,12 +80,18 @@ class DemoForm extends Component {
             </FieldRow>
           </StyledForm>
         )}
-      </OSK>
+      </FormHelper>
     );
   }
 }
 
 export default DemoForm;
+
+const Loading = styled.h3`
+  margin-top: 100px;
+  text-align: center;
+  color: white;
+`;
 
 const StyledForm = styled.form`
   width: 600px;
